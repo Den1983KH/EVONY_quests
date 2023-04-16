@@ -1,0 +1,2462 @@
+external(INT, "CreateWindow", "CreateWindowExA", "User32.dll" );
+external(INT, "CreateFont", "CreateFontA", "Gdi32.dll" );
+external(INT, "SendMessage", "SendMessageA", "User32.dll" );
+external(INT, "SetWindowText", "SetWindowTextA", "User32.dll" );
+external(INT, "wsprintf", "wsprintfA", "User32.dll" );
+external(INT, "MessageBox", "MessageBoxA", "user32.dll");
+external(INT, "cfg", "GetPrivateProfileStringA", "kernel32.dll");
+external(INT, "WritePrivateProfileString", "WritePrivateProfileStringA", "kernel32.dll");
+external(INT, "DeleteFile", "DeleteFileA", "kernel32.dll");
+external(INT, "IsIconic", "IsIconic", "User32.dll");
+external(INT, "ShowWindow", "ShowWindow", "User32.dll");
+external(INT, "EnableWindow", "EnableWindow", "User32.dll" );
+external(INT, "DeleteFile", "DeleteFileA", "kernel32.dll"); //размер текста в писькелях
+int NO_CLICK=0;
+int DO_CLICK=1;
+
+
+//#######################8==э
+// На сервере evo_quests
+//#######################(_о_)
+
+
+function 0_version(){}
+
+string version="Evo_quests_0.";
+string whatsnew[100];
+
+whatsnew [0]="Initial version";
+whatsnew [1]=""; 
+whatsnew [2]="";
+whatsnew [3]="";
+whatsnew [4]="";
+whatsnew [5]="";
+whatsnew [6]="";
+whatsnew [7]="";
+whatsnew [8]="";
+whatsnew [9]="";
+whatsnew[10]="";
+whatsnew[11]="";
+whatsnew[12]="";
+whatsnew[13]="";
+whatsnew[14]="";
+whatsnew[15]="";
+
+for(int int_version=0; int_version<sizearray(whatsnew); int_version++)
+{
+if(whatsnew[int_version]=="") {version=version+format(int_version-1);  break;}
+}
+
+string path, path_img, path_cfg, path_scr, main, path_win_data, path_mobs, path_quest_files, path_variants, path_mines, path_mobs_area, path_scanner, path_scanner_scr, path_obms;
+if(individualcode()=="dhqppjfitn") main = "D:\Dropbox\1_KIBOR\evony_quests\"; else main = pathfolder();
+
+
+path_img=main+"images\";
+path_variants=main+"variants\";
+path = main;
+path_cfg = main + "evony_quests_config.ini";
+path_obms = main+"obms\";
+path_quest_files = main+"quests\";
+/////////////////////////
+int pos_size_combo0[2][4];
+string text_combo0[2][10];
+int strok_combo0[2];
+int flag_combo0[2];
+
+//pos_size_combo0[0][0]=180; pos_size_combo0[0][1]=10; pos_size_combo0[0][2]=50; pos_size_combo0[0][3]=180;
+//pos_size_combo0[1][0]=180; pos_size_combo0[1][1]=40; pos_size_combo0[1][2]=50; pos_size_combo0[1][3]=180;
+
+//strok_combo0[1]=1; 
+//text_combo0[1][0]="evony_config.ini"; 
+
+
+int pos_size_button0[3][4];
+string text_button0[3];
+int flag_button0[3];
+pos_size_button0[0][0]=150+130+20; pos_size_button0[0][1]=60; pos_size_button0[0][2]=80; pos_size_button0[0][3]=20;
+text_button0[0]="Start"; 
+
+pos_size_button0[1][0]=150+75; pos_size_button0[1][1]=60; pos_size_button0[1][2]=70; pos_size_button0[1][3]=20;
+text_button0[1]="Open cfg"; 
+//////////
+int plx=130;
+int pos_size_edit0[6][4];
+string text_edit0[6];
+
+//pos_size_edit0[0][0]=80; pos_size_edit0[0][1]=5;   pos_size_edit0[0][2]=50; pos_size_edit0[0][3]=20;
+//text_edit0[0]="300";
+
+//////////
+int pos_size_check0[5][4];
+string text_check0[5];
+int flag_check0[5];
+
+//pos_size_check0[0][0]=17; pos_size_check0[0][1]=10;      pos_size_check0[0][2]=80; pos_size_check0[0][3]=20;
+
+int pos_size_static0[10][4];
+string text_static0[10];
+
+pos_size_static0[0][0]=17; pos_size_static0[0][1]=447;   pos_size_static0[0][2]=500; pos_size_static0[0][3]=20;
+pos_size_static0[1][0]=0;  pos_size_static0[1][1]=85;    pos_size_static0[1][2]=275+400; pos_size_static0[1][3]=15;
+pos_size_static0[2][0]=8;   pos_size_static0[2][1]=5+3;    pos_size_static0[2][2]=70; pos_size_static0[2][3]=20;
+//pos_size_static0[3][0]=8;   pos_size_static0[3][1]=30+3;    pos_size_static0[3][2]=70; pos_size_static0[3][3]=20;
+
+text_static0[0]="Telegram: @true_zzz "; 
+text_static0[1]=
+"---------------------------------------------------------------------LOG------------------------------------------------------------------------"; 
+text_static0[2]="Rally, sec   ";
+
+flag_combo0[0]=2;
+flag_combo0[1]=0;
+//////////
+createdialog(0, BUTTON, #pos_size_button0[0][0], #text_button0[0], #flag_button0[0] | 
+EDIT, #pos_size_edit0[0][0], #text_edit0[0] | 
+CHECK, #pos_size_check0[0][0], #text_check0[0], #flag_check0[0] | 
+COMBO, #pos_size_combo0[0][0], #text_combo0[0][0], #strok_combo0[0], #flag_combo0[0] |
+STATIC, #pos_size_static0[0][0], #text_static0[0]);
+//////////
+showdialog(0, version, 1150, 0, 750, 495, 4, 0);
+
+while(window (version)==0)pause_(10);
+win w1=window (version);
+
+int h_font = CreateFont(-21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Terminal");
+int h_font1 = CreateFont(-19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Terminal");
+int list=CreateWindow(0, "LISTBOX", "", 1+2048+8388608+2097152+1342177280+32768, 5, 103, 585, 357, formatwi(w1), 0, 0, 0); 
+
+//################################VARIABLES#############################################
+
+int static_arr[20];
+int flag_arr[20];
+
+int time_count=CreateWindow(0, "STATIC", "Time: ", 1342177280,     7+380,   12+25*2, 100, 25, formatwi(w1), 0, 0, 0);
+
+//flag_arr[0] =  CreateWindow(0, "BUTTON", "Дебаг",  3+1342177280,   7,       8,      80,  25, formatwi(w1), 0, 0, 0);
+//for(int count_i=0; count_i<sizearray(static_arr); count_i++) SendMessage(static_arr[count_i], WM_SETFONT, h_font1, 1);
+//SendMessage(time_count, WM_SETFONT, h_font1, 1);
+
+int checkbox_arr_quest_files[99]; //для квестов
+
+
+//################################VARIABLES#############################################
+SendMessage(list, WM_SETFONT, h_font, 1);
+
+//##################################IMAGES#############################################
+
+//################################VARIABLES#############################################
+if(loadsymbolbase (path+"basetext.sib")<1) messagebox("Error loadsymbolbase");
+string WindowName = "gvg"; // имя окна или часть имени (указать нужное)
+string WindowClass = "Qt5QWindowIcon"; // класс окна (указать нужное)
+int MonitorColor, MonitorX, MonitorY;
+string TextWindowAll="";
+char WindowText_c[999];
+char log_array[200]; 
+string TextWindow;
+win w_temp[9999];
+int win_no=0;
+win w[12];
+int n=0;
+int xe_win=586, ye_win=1084;
+int xe=586, ye=1084;
+int xw=586, yw=1084;
+int debug=1;
+int quests_found=0;
+int settings_loading_err=0;
+int open_items_amount=0; //количество в тхт
+string main_data_strings[999]; //количество в тхт
+
+int quests_files_amount=0;
+string quest_files_list[99];
+string variant_data_strings[999]; //количество в с варинатами
+
+int black_market_buy_amount=3;
+string black_market_use_resources_img="resource_rock resource_ore resource_gold";
+int three_dots_esc_amount=4;
+int checkbox_arr_quest_files_flag[999];
+int SCREEN[586][1084];
+initialarray(#checkbox_arr_quest_files_flag[0], 0);
+
+int read_rally_time_coord[4]={394, 998, 475, 1018};
+int in_activity_window_flag[99];
+int in_activity_count=0;
+int rally_rand_time[2]={0, 20};
+int rally_check_stamina_on_off=1;
+int stamina[2]={0, 0};
+int stamina_minimum=35;
+int stamina_preset=1; //1-4
+int speedup_limit_sec=10;
+int speedup_to_sec_min=20;
+int speedup_on_off=1;
+int vikings_center_coord[2]={0,0};
+int vikings_attack1_coord[2]={0,0};
+int vikings_attack2_coord[2]={0,0};
+int vikings_preset_coord[2]={0,0};
+int vikings_march_coord[2]={0,0};
+string vikings_schedule="18:10 19:20 01:05 12:59";
+
+//###################    зоны поиска картинок     #########################
+int zone_lupa[4]={170, 800, 300, 1100};
+int zone_marching[4]={0, 100, 400, 400};
+//######################  IMAGES  #######################
+int lupa[99][99];
+int back_to_castle_button[99][99];
+int attack_castle_time[99][20];
+int close_advert[99][99];
+int close_advert1[99][99];
+
+int close_chat_back_button[600][99];
+int cancel[99][99];
+int turn_sync_off[99][99];
+int noted_button[99][99];
+int turn_sync_on_pause[99][99];
+int turn_sync_from_pause[99][99];
+
+int chest1[500][500];
+int open_chest_btn[500][500];
+int chest_items_title_black[500][500];
+int chest_max_btn[500][500];
+int chest_use_btn[500][500];
+int array_quest_exist[33];
+int quest_done_chest_40[599][599];
+int three_dots[599][599];
+int button_activity[599][599];
+int window_activity[599][599];
+int button_confirm_black_market[200][200];
+int button_reroll_payable[200][200];
+int button_reroll_free[200][200];
+int march_clock[10][10];
+int rally_check_limit_time_swords[20][20];
+int rally_join_green[200][200];
+int speedup_arrow_right[200][50];
+int stamina_cristal[99][99];
+int btn_summon[99][99];
+int vikings_low_chanse_btn[99][99];
+int marching_expand[99][99];
+int close_march[99][99];
+int vikings_20lvl[99][99];
+int viking_event_list[99][99];
+
+//######################  IMAGES  #######################
+//###################on before mob search################
+int obms_heap_data_count=0;                //сколько тхт с мобами
+int obms_heap_collors[30][30];         //цвета
+int obms_heap_collors_amount[30][30];  //сколько цветов искать
+int obms_heap_collors_to_find_min[30][1];  //сколько цвтов надо найти
+int obms_heap_r[30][1];                    //разбежность
+int obms_heap_dimensions[30][30];      //размеры области поиска и где не искать
+int obms_heap_coords[30][30];          //координаты поиска
+string obms_heap_name[30];                 //название тхт
+
+string obms_img_name[30];
+int obms_img_coord[30][4];
+int obms_img_amount=0;
+int obms_img_r[30];
+int obms_img_p[30];
+//###################on before mob search################
+
+
+if(fopen(path+"log.txt", "w")!=0) fclose();
+
+CheckVersion();
+4_read_settings();
+log("Нажми Start");
+int gt_start=gettime();
+enabletimer(1);
+get_quest_files_list();
+
+
+loop()
+{
+  if(flag_button0[0]>0) 
+  {
+  flag_button0[0]=0;
+  break;
+  }
+sleep(100);
+}
+
+
+read_main_data();
+
+int windows_count=window (#w_temp[0], -1, WindowClass, -1); // найти все окна с указанныем классом окна
+log("Всего найдено окон: "+format(windows_count));
+
+pause_(1000);
+mousemove(1400, 200);
+2_load_images(); 
+3_find_windows();
+read_onbeforemobsearch_items();
+
+enabletimer(0);
+
+function 1_strt(){}
+
+log("========Start=======");
+
+
+
+for(int j=0; j<open_items_amount; j++)
+{
+
+  for(int h=0; h<windows_count; h++) 
+  {
+  if(is_activity_window(h)>0) in_activity_window_flag[h]=1;
+  else in_activity_window_flag[h]=0;
+  in_activity_count = in_activity_count + in_activity_window_flag[h];
+  }
+
+
+pause_(2000);
+
+  for(h=0; h<windows_count; h++) 
+  {
+    if(in_activity_window_flag[h]==0)
+    {
+      loop(three_dots_esc_amount)
+      {
+        if(click_img("three_dots", 0, h)<1) 
+        {
+        press_escape(h); pause_(2000);
+        }
+        else 
+        {
+        if(windows_count<6) pause_(500);
+        if(windows_count<3) pause_(1500);
+        break;
+        }
+      }
+    }
+  }
+
+if(in_activity_count<4) pause_(2000);
+
+  for(h=0; h<windows_count; h++) 
+  {
+    if(in_activity_window_flag[h]==0)
+    {
+    if(click_img("button_activity", 0, h)<1) array_quest_exist[h]=0;
+    }
+  }
+
+
+
+pause_(2000);
+
+
+check_done_quests(); 
+check_done_quests(); 
+
+//for(h=0; h<windows_count; h++) {sendmouse(LEFT, 280, 60, w[h]);   array_quest_exist[h]=0;}
+
+pause(500);
+quests_found=0;
+
+  if(open_item(main_data_strings[j])==0) // "pic.bmp + chest.txt" || "function ATTACK BOSS"
+  {
+  log("Пропуск"); 
+  //for(h=0; h<windows_count; h++) press_escape(h);  
+  activate(w1);
+  continue;
+  } 
+
+
+log("===Цикл+1 "+main_data_strings[j]));
+}
+
+
+
+function check_done_quests()
+{
+int coord[4]={0,100,xe_win,ye_win-200};
+int x, y, r=40, p=90, k;
+
+int quest_done_found[20];
+int quest_done_count=0;
+
+string quest_done_stat="";
+
+  for(int h=0; h<windows_count; h++) 
+  {
+  quest_done_found[h] = findimage(1, #quest_done_chest_40[0][0], 0, #x, #y, coord[0], coord[1], coord[2], coord[3], r,r,r,r,r,r,p,1, w[h]);
+  quest_done_stat=quest_done_stat+format(quest_done_found[h])+", ";
+  quest_done_count = quest_done_count + quest_done_found[h];
+  }
+
+log("Сундук найден в: "+quest_done_stat);
+
+  for(h=0; h<windows_count; h++) 
+  {
+    if(quest_done_found[h])
+    {
+    log("Сдаю квест в окне №"+format(h));
+    log("Клик по сундуку");
+    click(x+coord[0], y+coord[1], h);
+    if(quest_done_count<4) pause_(2000);
+    }
+  }
+
+  for(h=0; h<windows_count; h++) 
+  {
+    if(quest_done_found[h])
+    {
+    log("Клик закрыть окно");
+    click(289, 73, h);
+    }
+  }
+
+}
+
+function check_color(int xs, int ys, int col, int len)
+{
+//ищем хоть один цвет
+int scan_r1=5;
+
+  for(int counter_x=0; counter_x<len; counter_x++)
+  {
+  if(scanpixel(counter_x+xs, ys, col, scan_r1, scan_r1, scan_r1, scan_r1, scan_r1, scan_r1, w[win_no])==1) return 1;
+  }
+
+return 0;
+}
+
+
+function get_stamina(int win_num)
+{
+if(win_num<0) {messagebox("get_stamina err");}
+string Text;
+string digits[2];
+int Color_Text[2]; Color_Text[0]=15132646; Color_Text[1]=12961477;
+int Color_Fon[1];  Color_Fon[0]=527368;
+readtext (NUM | MARK, #Text, 19, 2, -1, -1, -1, #Color_Text[0], #Color_Fon[0], 7, -1,  409, 948, 490, 969, w[win_num]);
+scr("get_stamina_"+format(win_num), 409, 948, 490, 969, win_num);
+
+regexreplace(-1, #Text, Text, " ", "");
+
+regexsearch(2, #digits[0], Text, "-?[0-9]\d*(\.\d+)?");
+
+regexreplace(-1, #digits[0], digits[0], " ", "");
+regexreplace(-1, #digits[1], digits[1], " ", "");
+
+
+if(formatsn(digits[0]) < 0 || formatsn(digits[0]) >1460) {messagebox("Ошибка распознавания "+Text); goto global fin;}
+if(formatsn(digits[1]) < 0 || formatsn(digits[1]) >1460) {messagebox("Ошибка распознавания "+Text); goto global fin;}
+
+stamina[0]=formatsn(digits[0]);
+stamina[1]=formatsn(digits[1]);
+
+log("Прочитана стамина: "+Text+". Расшифровано: "+format(stamina[0])+"/"+format(stamina[1]));
+}
+
+
+
+function quest_vikings_20_plus()
+{
+log("Запуск quest_vikings_1_20");
+log("График: "+vikings_schedule);
+
+int times[50][2];
+string digits[99];
+
+
+int found=regexsearch(99, #digits[0], vikings_schedule, "-?[0-9]\d*(\.\d+)?");
+int times_amount=0;
+  for(int k=0; k<found; k=k+2)
+  {
+  if(size(digits[k])!=2) messagebox("Ошибка времени: "+digits[k]+" должно быть 2 числа");
+  if(size(digits[k+1])!=2) messagebox("Ошибка времени: "+digits[k+1]+" должно быть 2 числа");
+  
+  char ch[5];
+  char ch1[5];
+  strcpy(#ch[0], digits[k]);
+  strcpy(#ch1[0], digits[k+1]);
+  
+  if(ch[0]=='0') digits[k]=ch[1];
+  if(ch1[0]=='0') digits[k+1]=ch[1];
+  
+  if(formatsn(digits[k])<0 || formatsn(digits[k]) >59) messagebox("Ошибка времени: "+digits[k]);
+  if(formatsn(digits[k+1])<0 || formatsn(digits[k+1]) >59) messagebox("Ошибка времени: "+digits[k+1]);
+  
+  times[times_amount][0]=formatsn(digits[k]);
+  times[times_amount][1]=formatsn(digits[k+1]);
+  
+  times_amount++;
+  }
+
+log("Найдено в графике: "+format(times_amount));
+log("Выход из activity");
+
+int skip_win[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+
+  for(int i=0; i<windows_count; i++)
+  {
+  log("Окно #"+format(i));
+  log("Клик: back");  click(47, 89, i); if(windows_count<5) pause_(1500); else pause_(400);
+  }
+
+
+int Year, Month, DayOfWeek, Day, Hour, Minute, Second, Milliseconds;
+int loop_count=1;
+lo:;
+
+log("Круг №"+format(loop_count)+". Ожидаю подходящее время...");
+
+  loop()
+  {
+  getlocaltime(Year, Month, DayOfWeek, Day, Hour, Minute, Second, Milliseconds);
+  
+    for(int n=0; n<times_amount; n++)
+    {
+    if(Hour==times[n][0] && Minute==times[n][1]) goto break1;
+    }
+  sleep(1000);
+  }
+
+break1:;
+log("Настало время: "+format(times[n][0])+":"+format(times[n][1]));
+
+  for(i=0; i<windows_count; i++)
+  {
+  log("Окно #"+format(i));
+  if(find_img("btn_summon", #btn_summon[0][0], 0, 200, xe_win, ye_win-200, 20, 60, 10, DO_CLICK, 0, 0, i)==0) {log("Не найдено btn_summon"); continue;}
+  
+  log("Клик: центр");            pause_(5000);     click(vikings_center_coord[0], vikings_center_coord[1], i); pause_(1500);
+  log("Клик: vikings_attack1_coord"); click(vikings_attack1_coord[0]-50, vikings_attack1_coord[1], i); pause_(1000);
+  log("Клик: попросить помощи");      click(459, 710, i); pause_(1000);
+  log("Клик: подтвердить");           click(390, 662, i); pause_(1000);
+  }
+
+pause_(60000);
+loop_count++;
+goto lo;
+
+}
+
+
+
+
+
+
+function quest_vikings_1_20()
+{
+log("Запуск quest_vikings_1_20");
+log("Выход из activity и клик по мобу");
+
+int skip_win[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+
+  for(int i=0; i<windows_count; i++)
+  {
+  log("Окно #"+format(i));
+  log("Клик: back");  click(47, 89, i); pause_(1500);
+  log("Клик: центр");  click(vikings_center_coord[0], vikings_center_coord[1], i); pause_(1500);
+  log("Клик: vikings_attack1_coord"); click(vikings_attack1_coord[0], vikings_attack1_coord[1], i); pause_(1000);
+  log("Клик: vikings_attack2_coord"); click(vikings_attack2_coord[0], vikings_attack2_coord[1], i); pause_(1000);
+  log("Клик: vikings_preset_coord");  click(vikings_preset_coord[0],  vikings_preset_coord[1], i); pause_(1000);
+  log("Клик: vikings_march_coord");   click(vikings_march_coord[0],  vikings_march_coord[1], i); 
+  
+  if(find_img("vikings_low_chanse_btn", #vikings_low_chanse_btn[0][0], 0, 0, xe_win, ye_win, 20, 60, 2000, DO_CLICK, 0, 0, i)) log("Клик на кнопку");
+  
+  }
+
+
+
+
+  loop()
+  {
+    for(i=0; i<windows_count; i++)
+    {
+    if(skip_win[i]==1) continue;
+    
+      if(find_img("", #btn_summon[0][0], 0, 200, xe_win, ye_win-200, 20, 60, 10, NO_CLICK, 0, 0, i)==1)
+      {
+      
+        if(find_img("", #vikings_20lvl[0][0], 0, 0, xe_win, ye_win, 20, 60, 10, NO_CLICK, 0, 0, i)==1)
+        {
+        log("===Найдено vikings_20lvl. Это окно будет пропускаться");
+        skip_win[i]=1;
+        continue;
+        }
+      
+      if(find_img("", #marching_expand[0][0], 0, 0, xe_win, 400, 20, 60, 10, NO_CLICK, 0, 0, i)==1 ||
+      find_img("", #close_march[0][0], 0, 0, xe_win, 400, 20, 60, 10, NO_CLICK, 0, 0, i)==1) {log("Найдена кнопка, но идет марш"); continue;}
+      
+      find_img("", #btn_summon[0][0], 0, 200, xe_win, ye_win-200, 20, 60, 10, DO_CLICK, 0, 0, i); pause_(2000);
+      log("Клик: vikings_center_coord");  click(vikings_center_coord[0], vikings_center_coord[1], i); pause_(1000);
+      log("Клик: vikings_attack1_coord"); click(vikings_attack1_coord[0], vikings_attack1_coord[1], i); pause_(1000);
+      log("Клик: vikings_attack2_coord"); click(vikings_attack2_coord[0], vikings_attack2_coord[1], i); pause_(1000);
+      log("Клик: vikings_preset_coord");  click(vikings_preset_coord[0],  vikings_preset_coord[1], i); pause_(1000);
+      log("Клик: vikings_march_coord");   click(vikings_march_coord[0],  vikings_march_coord[1], i); 
+      
+      if(find_img("vikings_low_chanse_btn", #vikings_low_chanse_btn[0][0], 0, 0, xe_win, ye_win, 20, 60, 2000, DO_CLICK, 0, 0, i)) log("Клик на кнопку");
+      
+      }
+    }
+  }
+
+
+}
+
+function quest_vikings_main()
+{
+log("Начало quest_vikings_main");
+click(30, 84, 0); pause(1000);
+
+st:;
+int march_sent=0;
+
+
+  loop()
+  {
+  log("Марш №"+format(march_sent+1));
+  log("Event center"); click(536, 282, 0); pause_(5000);
+  
+  buba:;
+  int sk=1;
+    loop()
+    {
+    int ra=rand(-20, 20);
+    log("Скрол пока не найду картинку. Круг #"+format(sk));
+    mousetransfer(LEFT, 80+ra, 810, 80+ra, 810-350, 0.0006,1, w[0]); pause_(2500);
+    if(find_img("viking_event_list", #viking_event_list[0][0], 0, 0, xe_win, ye_win, 20, 60, 1000, DO_CLICK, 0,0,0,0)==0) {sk++;} else break;
+    
+      if(sk>5)
+      {
+      sk=0;
+      log("===Ошибка скрола. Клик назад");
+      pause(1000); click(30, 84, 0); pause(1000);
+      log("Event center"); click(536, 282, 0); pause_(5000);
+      }
+    }
+  
+  
+  
+  pause_(1000);
+  log("aliance trial"); click(300, 427, 0); 
+
+dude:;
+    if(find_pix("первый хелп", 461, 561, 1661209, 10, 2000, NO_CLICK, 0)==0) 
+    {
+    log("Не найден help. Клик назад"); click(30, 84, 0); pause_(3000);
+    if(find_img("viking_event_list", #viking_event_list[0][0], 0, 0, xe_win, ye_win, 20, 60, 1000, DO_CLICK, 0,0,0,0)==0) {log("===не нашел viking_event_list"); goto buba;}
+    pause_(5000);
+    goto dude;
+    }
+  pause_(1000);
+  
+  if(march_sent==0)  {log("Нажал хелп №1"); click(461, 561,       0); } 
+  if(march_sent==1)  {log("Нажал хелп №2"); click(461, 561+135,    0); }
+  if(march_sent==2)  {log("Нажал хелп №3"); click(461, 561+135*2,  0); }
+  if(march_sent==3)  {log("Нажал хелп №4"); click(461, 561+135*3,  0); }
+  
+  //if(find_pix("Жду карту", 572, 55, 531481, 10, 5000, NO_CLICK, 0)==0) {messagebox("не найден пиксель открытой карты где моб"); goto global fin;}
+  pause_(500);
+  log("Клик центр"); click(291, 530,  0); pause_(1000);
+  log("Атака"); click(158, 434,  0); pause_(1000);
+  log("Атака2"); click(289, 806,  0); pause_(1000);
+  
+  log("5 минууууут"); click(184, 590,  0); pause_(2500);
+  
+  if(march_sent==0)  {log("Нажал пресет №1"); click(61, 158,       0); } 
+  if(march_sent==1)  {log("Нажал пресет №2"); click(61+66, 158,    0); }
+  if(march_sent==2)  {log("Нажал пресет №3"); click(61+66*2, 158,  0); }
+  if(march_sent==3)  {log("Нажал пресет №4"); click(61+66*3, 158,  0); }
+  pause_(1500);
+  log("Клик марш"); click(425, 1040, 0); pause_(3000);
+  march_sent++;
+  
+  if(march_sent>=4) break;
+  }
+
+
+log("Все марши отправлены. Жду конец марша");
+
+  loop()
+  {
+  if(find_img("", #marching_expand[0][0], 0, 0, xe_win, 400, 20, 60, 10, NO_CLICK, 0, 0, 0)==0 &&
+  find_img("", #close_march[0][0], 0, 0, xe_win, 400, 20, 60, 10, NO_CLICK, 0, 0, 0)==0) break;
+  //if(find_pix("", 358, 238, 2182515, 5, 500, NO_CLICK, 0)==0) break;
+  sleep(1000);
+  }
+
+log("Марши завершены");
+goto st;
+
+}
+
+function quest_rally_boss()
+{
+int x,y, r=20, p=70;
+int loop_no=1;
+
+
+log("Кнопка back");  for(int i=0; i<windows_count; i++) {click(44, 85, i); if(windows_count<5) pause_(500); } //кнопка бэк
+log("Кнопка aliance"); for(i=0; i<windows_count; i++) {click(542, 841, i); if(windows_count<5) pause_(500); } //кнопка альянс
+log("Кнопка aliance war"); for(i=0; i<windows_count; i++) {click(515, 634, i); if(windows_count<5) pause_(500); } //кнопка альянс вар
+
+
+begin:log("Rally boss. Круг #"+format(loop_no));
+
+
+int cou=0;
+string Text;
+log("Жду join_rally во всех окнах");
+int xt[12], yt[12];
+int xd, yd, coco;
+getdisplay(coco, xd, yd);
+
+
+int gt_chec_ombs=gettime();
+int gt_chec_sec=30;
+
+  loop()
+  {
+  
+    if(gettime()-gt_chec_ombs> gt_chec_sec*1000)
+    {
+    gt_chec_ombs=gettime();
+    
+      for(i=0; i<windows_count; i++)
+      {
+        if(click_img("three_dots", 1, i))
+        {
+        click(542, 841, i); pause_(1500); //кнопка альянс
+        click(515, 634, i); pause_(1500); //кнопка альянс вар
+        }
+      }
+    
+    }
+  
+  
+  if(findimage(12, #rally_join_green[0][0], 0, #xt[0], #yt[0], 0, 0, xd, yd, 5,5,5,5,5,5,90,1, -1)==windows_count) break;
+  
+  sleep(200);
+  }
+
+
+
+
+
+log("Найдено");
+
+int x_join, y_join;
+int co1[4]={414, 474, 565, 601}; //координаты поиска rally_join_green вверху
+int co2[4]={430, 855, 570, 955};
+int rj=15, pj=60;
+
+string digits_lim[4];
+int indent_lim[4]={-301, -9, -222, 28};
+int time_rally_limit[12];
+
+log("Определяю сколько до конца сбора осталось (лимит)");
+
+  loop()
+  {
+    for(i=0; i<windows_count; i++)
+    {
+    if(find_pix("", 309, 392, 9196816 , 15, 0, NO_CLICK, i)==1 &&
+      find_pix("", 525, 548, 1655081, 15, 0, NO_CLICK, i)==1)
+      {
+        if(findimage(1, #rally_join_green[0][0], 0, #x_join, #y_join, co1[0], co1[1], co1[2], co1[3], rj,rj,rj,rj,rj,rj,pj,1, w[i]))
+        {
+        cou++;
+        
+        //ЗЕЛЕНЫЙ ЕБУЧИЙ ТАЙМЕР
+        
+        if(sumcolor(20, x_join-20+co1[0], y_join+co1[1], x_join+150+co1[0], y_join+80+co1[1], 528590, 10, 10, 10 ,10, 10, 10, w[i])) {messagebox("В окне "+format(i)+" не успеваем"); goto global fin;}
+        //int Color_Text_lim[1];  Color_Text_lim[0]=11917014;
+        //readtext (NUM | MARK, #Text, 5, 1, -1, -1, -1, #Color_Text[0], -1, 5, 50, x_join+co1[0]+indent_lim[0], y_join+co1[1]+indent_lim[1], x_join+co1[0]+indent_lim[2], y_join+co1[1]+indent_lim[3], w[i]);
+        //scr("tim"+format(i), x_join+co1[0]+indent_lim[0], y_join+co1[1]+indent_lim[1], x_join+co1[0]+indent_lim[2], y_join+co1[1]+indent_lim[3], i);
+        
+        int Color_Text_lim[1];
+        Color_Text_lim[0]=14089215;
+        int Color_Fon_lim[1];
+        Color_Fon_lim[0]=1054736;
+        readtext (NUM | MARK, #Text, 3, 1, -1, 35, -1, #Color_Text_lim[0], #Color_Fon_lim[0], 5, -1, 174, 545, 260, 566, w[i]);
+        scr("tim"+format(i), 174, 545, 260, 566, i);
+        
+        
+        regexsearch(3, #digits_lim[0], Text, "-?[0-9]\d*(\.\d+)?");
+        log(digits_lim[0]+":"+digits_lim[1]+":"+digits_lim[2]);
+        if(formatsn(digits_lim[0]) < 0 || formatsn(digits_lim[0]) >60) {log("Ошибка распознавания "+Text); }
+        if(formatsn(digits_lim[1]) < 0 || formatsn(digits_lim[1]) >60) {log("Ошибка распознавания "+Text); }
+        if(formatsn(digits_lim[2]) < 0 || formatsn(digits_lim[2]) >60) {log("Ошибка распознавания "+Text); }
+        
+        time_rally_limit[i]=formatsn(digits_lim[0])*60*60+formatsn(digits_lim[1])*60+formatsn(digits_lim[2]);
+        log("Лимит окно "+format(i)+": "+format(time_rally_limit[i]));
+        if(time_rally_limit[i]>60*20) {log("====Лимит слишком большой===="); pause(3000);}
+        log("Join");
+        click(463, 558, i);
+        if(windows_count<5) pause_(900);
+        }
+        else 
+        {
+        messagebox("Не найдено rally_join_green"); 
+        goto global fin;
+        }
+      }
+    
+    
+    
+    
+    //int speedup_limit_sec=10;
+    
+    int speedup_gt=gettime()+time_rally_limit[i]*1000-speedup_limit_sec*1000;
+    
+    int temp_s=(time_rally_limit[i]*1000-speedup_limit_sec*1000)/1000;
+    log("Ускорение через "+format(time_rally_limit[i])+" - "+format(speedup_limit_sec)+" = "+format(temp_s)+" секунд");
+    
+    
+    /*
+    if(find_pix("", 315, 403, 5386496, 15, 0, NO_CLICK, i)==1 &&
+      find_pix("", 523, 884, 1661217, 15, 0, NO_CLICK, i)==1)
+      {
+      cou++;
+      if(check_color(461, 850, 528590, 60)) {messagebox("В окне "+format(i)+" не успеваем"); goto global fin;}
+      //проверка что не успеем
+      
+      log("Клик join2 в окне "+format(i));
+      click(523, 884, i);
+      if(windows_count<5) pause_(900);
+      }
+    */
+    
+    }
+  
+  if(cou<windows_count) cou=0;
+  else break;
+  sleep(100);
+  }
+
+int avarage_limit=0;
+
+for(i=0; i<windows_count; i++) avarage_limit=avarage_limit+time_rally_limit[i];
+
+int res_lim_avarage=avarage_limit/windows_count;
+
+log("Средний лимит: "+format(res_lim_avarage));
+
+  for(i=0; i<windows_count; i++)
+  {
+    if(time_rally_limit[i]>res_lim_avarage*1.2) 
+    {
+    log("Лимит в окне "+format(i)+" больше чем средний+20% - "+format(time_rally_limit[i])+
+    ", средний: "+format(res_lim_avarage*1.2));
+    log("Теперь лимит = "+format(res_lim_avarage));
+    time_rally_limit[i] = res_lim_avarage;
+    }
+  
+    if(time_rally_limit[i]<1) 
+    {
+    log("Лимит в окне "+format(i)+" меньше чем средний - "+format(time_rally_limit[i])+
+    ", средний: "+format(res_lim_avarage*1.2));
+    log("Теперь лимит = "+format(res_lim_avarage));
+    time_rally_limit[i] = res_lim_avarage;
+    }
+  
+  }
+
+//проверка стамины
+
+int gt_begin=gettime(); //тут определили все времена уже и создаем точку отсчета
+int stamina_check_count=0;
+
+check_stam:;
+
+  if(rally_check_stamina_on_off && stamina_check_count < 2)
+  {
+  if(stamina_check_count>0) log("Перепроверка стамины");
+  else log("Проверка стамины");
+  pause_(3000);
+  
+  int low_stamina_win_no[12];
+  int low_stamina_count=0;
+  
+    for(i=0; i<windows_count; i++)
+    {
+    get_stamina(i);
+    if(stamina_minimum>stamina[0]) {log("Мало стамины в окне: "+format(i)); low_stamina_win_no[low_stamina_count]=i; low_stamina_count++;}
+    }
+  
+    if(low_stamina_count > 0)
+    {
+    log("Клик плюс");
+      for(i=0; i<low_stamina_count; i++)
+      {
+      click(530, 960, low_stamina_win_no[i]); if(low_stamina_count<5) pause_(1000); else pause_(500);  //plus
+      }
+    
+    log("Клик пресет");
+      for(i=0; i<low_stamina_count; i++)
+      {
+        if(findimage(1, #stamina_cristal[0][0], 0, #x, #y, 0, 0, xe, ye, 15,15,15,15,15,15,80,1, w[low_stamina_win_no[i]]))
+        {
+        log("Найдена покупка за кристалы"); click(480, 641, low_stamina_win_no[i]); 
+        }
+        else 
+        {
+        if(stamina_preset==1) {log("Клик пресет 1"); click(480, 463, low_stamina_win_no[i]);}
+        if(stamina_preset==2) {log("Клик пресет 2"); click(480, 641, low_stamina_win_no[i]);}
+        if(stamina_preset==3) {log("Клик пресет 3"); click(480, 819, low_stamina_win_no[i]);}
+        if(stamina_preset==4) {log("Клик пресет 4"); click(480, 995, low_stamina_win_no[i]);}
+        }
+      if(low_stamina_count<5) pause_(500); else pause_(200);
+      }
+    
+    log("Клик макс");
+      for(i=0; i<low_stamina_count; i++)
+      {
+      click(177, 790, low_stamina_win_no[i]); if(low_stamina_count<5) pause_(500); else pause_(200);  
+      }
+    
+    
+    log("Клик use");
+      for(i=0; i<low_stamina_count; i++)
+      {
+      click(421, 786, low_stamina_win_no[i]);
+      if(low_stamina_count<5) pause_(1000); else pause_(300);  
+      }
+    
+    log("Клик назад");
+    
+      for(i=0; i<low_stamina_count; i++)
+      {
+      click(30, 84, low_stamina_win_no[i]); if(low_stamina_count<5) pause_(1000); else pause_(300);  
+      }
+    
+    log("Проверка Клик назад");
+    
+      for(i=0; i<low_stamina_count; i++)
+      {
+      repeat:;
+        if(find_pix("", 356, 1029, 543124, 10, 100, NO_CLICK, i)==0 || find_pix("", 218, 1031, 17672, 10, 100, NO_CLICK, i)==0) 
+        {
+        log("Не прожался назад");
+        click(30, 84, low_stamina_win_no[i]); pause_(3000);
+        log("Перепроверка");
+        goto repeat;
+        }
+      }
+    
+    
+    
+    stamina_check_count++;
+    goto check_stam;
+    
+    } else log("Стамина везде ОК");
+  }
+
+
+
+int Color_Text[1]; Color_Text[0]=13561847;
+int Color_Fon[2]; Color_Fon[0]=1646625; Color_Fon[1]=22809;
+int coord[4]={0, 0, xe_win, ye_win};
+int indent[4]={19, 0, 98, 19};
+
+log("Кнопка пресет3"); for(i=0; i<windows_count; i++) {click(189, 160, i);  if(windows_count<5) pause_(1500);} //пресет3
+
+pause_(1500);
+
+log("Проверка времени пути к замку");
+
+string res_text[12];
+int scr_time[150][30];
+
+//ЖЕЛТЫЙ ЕБУЧИЙ ТАЙМЕР
+
+  for(i=0; i<windows_count; i++)
+  {
+  if(findimage(1, #march_clock[0][0], 0, #x, #y, coord[0], coord[1], coord[2], coord[3], r,r,r,r,r,r,p,1, w[i])<1) {messagebox("Не найдено march_clock"); goto global fin;}
+  if(sumcolor(20, x-20+coord[0], y+coord[1], x+150+coord[0], y+80+coord[1], 528590, 10, 10, 10 ,10, 10, 10, w[i])) {messagebox("В окне "+format(i)+" не успеваем"); goto global fin;}
+  scr("к_замку_"+format(i), x+coord[0]+indent[0], y+coord[1]+indent[1], x+coord[0]+indent[2], y+coord[1]+indent[3], i);
+  
+  readtext (NUM | MARK, #Text, 1, 1, -1, -1, -1, #Color_Text[0], #Color_Fon[0], 85, 31, x+coord[0]+indent[0], y+coord[1]+indent[1], x+coord[0]+indent[2], y+coord[1]+indent[3], w[i]);
+  res_text[i]=Text;
+  regexreplace(-1, #res_text[i], res_text[i], "^n", "");
+  log("Прочитано в окне "+format(i)+": "+res_text[i]);
+  }
+
+
+string digits[3];
+int time_path_to_castle[12];
+
+log("Валидация времени пути к замку. ");
+
+  for(i=0; i<windows_count; i++)
+  {
+  regexsearch(3, #digits[0], res_text[i], "-?[0-9]\d*(\.\d+)?");
+  //log(digits[0]+"---"+digits[1]+"---"+digits[2]);
+  if(formatsn(digits[0]) < 0 || formatsn(digits[0]) >23) {messagebox("Ошибка распознавания "+res_text[i]); goto global fin;}
+  if(formatsn(digits[1]) < 0 || formatsn(digits[1]) >60) {messagebox("Ошибка распознавания "+res_text[i]); goto global fin;}
+  if(formatsn(digits[2]) < 0 || formatsn(digits[2]) >60) {messagebox("Ошибка распознавания "+res_text[i]); goto global fin;}
+  
+  time_path_to_castle[i]=formatsn(digits[0])*60*60+formatsn(digits[1])*60+formatsn(digits[2]);
+  log("time_path_to_castle в окне "+format(i)+": "+format(time_path_to_castle[i]));
+  }
+
+int wait_time_s[12];
+
+  for(i=0; i<windows_count; i++)
+  {
+  wait_time_s[i]=rand(rally_rand_time[0], time_rally_limit[i]-time_path_to_castle[i]-rally_rand_time[1]);
+  log("Формула от rally_rand_time[0] до time_rally_limit[i]-time_path_to_castle[i]-rally_rand_time[1]");
+  log("wait_time_s Расчет: рандом от "+format(rally_rand_time[0])+" до "+format(time_rally_limit[i])+
+  "-"+format(time_path_to_castle[i])+"-"+format(rally_rand_time[1]));
+  log("Wait перед отправкой в замок, окно "+format(i)+": "+format(wait_time_s[i]));
+  
+  //time_rally_limit - зеленый таймер
+  //time_path_to_castle - путь к замку
+  //rally_rand_time - с конфига
+  
+  }
+
+log("Жду отправку...");
+
+
+int already_joined[12];
+int joined_count=0;
+initialarray(#already_joined[0], 0);
+
+  loop()
+  {
+    for(i=0; i<windows_count; i++)
+    {
+      if(already_joined[i]==0)
+      {
+        if(gettime() - gt_begin > wait_time_s[i] * 1000) 
+        {
+        joined_count++;
+        already_joined[i]=1;
+        log("Отправка в окне "+format(i));
+        click(411, 1040, i);
+        if(joined_count==windows_count) goto break1;
+        }
+      }
+    
+    sleep(100);
+    }
+  }
+
+break1:;
+
+log("Отправлено во всех окнах");
+
+
+  if(speedup_on_off)
+  {
+  log("Ждем начала ускорения");
+  int rand_win=rand(0, windows_count);
+  log("Рандомное окно: "+format(rand_win));
+  while(gettime()<speedup_gt) sleep(100);
+  log("Настал твой час, окно номер "+format(rand_win));
+  
+  log("Клик назад"); click(30, 84, rand_win); pause_(1000);
+  log("Клик назад"); click(30, 84, rand_win); pause_(1000);
+  
+  
+    if(find_img("speedup_arrow_right", #speedup_arrow_right[0][0], 0, 0,  xe_win, ye_win, 20, 60, 60000, NO_CLICK,  0, 0,   rand_win)<1)
+    {
+    messagebox("err111");
+    goto global fin;
+    }
+  
+  log("Определяем сколько бежать к мобу\боссу");
+  
+  int Color_Text_kek[1]; Color_Text_kek[0]=14088191;
+  readtext (NUM | MARK, #Text, 29, 1, -1, -1, -1, #Color_Text_kek[0], -1, 5, 50, 201, 233, 276, 249, w[rand_win]);
+  scr("goto_boss_"+format(0), 201, 233, 276, 249, rand_win);
+  
+  regexsearch(3, #digits_lim[0], Text, "-?[0-9]\d*(\.\d+)?");
+  log("Прочитано в окне "+format(rand_win)+" - "+digits_lim[0]+":"+digits_lim[1]+":"+digits_lim[2]);
+  if(formatsn(digits_lim[0]) < 0 || formatsn(digits_lim[0]) >60) {messagebox("Ошибка распознавания "+Text); goto global fin;}
+  if(formatsn(digits_lim[1]) < 0 || formatsn(digits_lim[1]) >60) {messagebox("Ошибка распознавания "+Text); goto global fin;}
+  if(formatsn(digits_lim[2]) < 0 || formatsn(digits_lim[2]) >60) {messagebox("Ошибка распознавания "+Text); goto global fin;}
+  
+  int curr_wait_sec=formatsn(digits_lim[0])*60*60+formatsn(digits_lim[1])*60+formatsn(digits_lim[2]);
+  int count_speedups=0;
+  
+  log("Текущее ожидание пробежки мобу\боссу: "+format(curr_wait_sec));
+  
+  
+    while(curr_wait_sec>speedup_to_sec_min)
+    {
+    curr_wait_sec=curr_wait_sec/2;
+    count_speedups++;
+    }
+  
+  log("Нажать ускорение раз: "+format(count_speedups));
+  
+    if(find_img("speedup_arrow_right", #speedup_arrow_right[0][0], 0, 0,  xe_win, ye_win, 20, 60, 30000, DO_CLICK,  0, 0,   rand_win)<1)
+    {
+    log("Не дождался speedup_arrow_right. Возврат назад");
+    goto back;
+    }
+  
+  pause_(2000);
+  
+  loop(count_speedups) {click(505, 546, rand_win); pause_(300);}
+  
+  back:log("Клик назад"); click(48, 89, rand_win);
+  
+  log("Кнопка aliance"); click(542, 841, rand_win); pause_(1500); //кнопка альянс
+  
+  log("Кнопка aliance war"); click(515, 634, rand_win); pause_(1500); //кнопка альянс вар
+  
+  }
+
+loop_no++;
+
+goto begin;
+}
+
+function open_item(string data)
+{
+//path_variants
+int k;
+string temp;
+
+  if(regexsearch(1, #temp, data, "function")==1)
+  {
+  
+    if(regexsearch(1, #temp, data, "rally_boss")==1 || regexsearch(1, #temp, data, "Rally_boss")==1)
+    {
+    quest_rally_boss();
+    return 0;
+    }
+  
+    if(regexsearch(1, #temp, data, "quest_vikings_1_20")==1)
+    {
+    k=loadimage (#marching_expand[0][0],         path_img+"marching_expand.bmp"); if(k<1) log("Error load img marching_expand: "+formatic(13)+imgerr(k));
+    k=loadimage (#close_march[0][0],             path_img+"close_march.bmp"); if(k<1) log("Error load img close_march: "+formatic(13)+imgerr(k));
+    k=loadimage (#vikings_low_chanse_btn[0][0],             path_img+"vikings_low_chanse_btn.bmp"); if(k<1) log("Error load img vikings_low_chanse_btn: "+formatic(13)+imgerr(k));
+    k=loadimage (#btn_summon[0][0],             path_img+"btn_summon.bmp"); if(k<1) log("Error load img btn_summon: "+formatic(13)+imgerr(k));
+    
+    quest_vikings_1_20();
+    return 0;
+    }
+  
+    if(regexsearch(1, #temp, data, "quest_vikings_20_plus")==1)
+    {
+    k=loadimage (#marching_expand[0][0],         path_img+"marching_expand.bmp"); if(k<1) log("Error load img marching_expand: "+formatic(13)+imgerr(k));
+    k=loadimage (#close_march[0][0],             path_img+"close_march.bmp"); if(k<1) log("Error load img close_march: "+formatic(13)+imgerr(k));
+    k=loadimage (#vikings_low_chanse_btn[0][0],  path_img+"vikings_low_chanse_btn.bmp"); if(k<1) log("Error load img vikings_low_chanse_btn: "+formatic(13)+imgerr(k));
+    k=loadimage (#btn_summon[0][0],             path_img+"btn_summon.bmp"); if(k<1) log("Error load img btn_summon: "+formatic(13)+imgerr(k));
+    
+    
+    quest_vikings_20_plus();
+    return 0;
+    }
+  
+    if(regexsearch(1, #temp, data, "quest_vikings_main")==1)
+    {
+    k=loadimage (#viking_event_list[0][0],        path_img+"viking_event_list.bmp"); if(k<1) log("Error load img viking_event_list: "+formatic(13)+imgerr(k));
+    k=loadimage (#marching_expand[0][0],         path_img+"marching_expand.bmp"); if(k<1) log("Error load img marching_expand: "+formatic(13)+imgerr(k));
+    k=loadimage (#close_march[0][0],             path_img+"close_march.bmp"); if(k<1) log("Error load img close_march: "+formatic(13)+imgerr(k));
+    
+    quest_vikings_main();
+    return 0;
+    }
+  
+  
+  }
+
+
+int x, y, r=20, p=60; 
+int coord[4]={0,0,xe_win,ye_win};
+
+
+string image_name;
+if (regexsearch(1, #image_name, data, ".+?(?=+)")==0) messagebox ("Err1");
+regexreplace(-1, #image_name, image_name, " ", "");
+
+int img[999][999];
+if(loadimage (#img[0][0], path_img+image_name)<1) {log("====Error load "+image_name); return 0;}
+
+
+string var_name;
+if (regexsearch(1, #var_name, data, "(?<=+).*")==0) messagebox ("Err2");
+if (regexsearch(1, #temp, data, ".txt")==0) messagebox ("Err3");
+regexreplace(-1, #var_name, var_name, " ", "");
+
+
+check_if_quest_exist(image_name); //заполняем array_quest_exist
+
+if(quests_found==0) {log("Квестов нет ни в одном окне"); return 0;}
+
+log("===Конец открытия квеста");
+log("===Начало вариантов прохождения");
+
+if(click_variant_images(var_name)<1) {log("====kek2====");}
+
+}
+
+
+
+function check_if_quest_exist(string img_name)
+{
+int coord[4]={0,0,xe_win,ye_win};
+int img[999][999];
+int x,y, r=20, p=60;
+if(loadimage (#img[0][0], path_img+img_name)<1) {log("====Error load "+img_name); return 0;}
+
+string ret="";
+
+log("Проверка квестов: "+img_name);
+
+  for(int ww=0; ww<windows_count; ww++)
+  {
+    if(findimage(1, #img[0][0], 0, #x, #y, coord[0], coord[1], coord[2], coord[3], r,r,r,r,r,r,p,1, w[ww])==1)
+    {
+    log("Нашел "+img_name+", клик");
+    click(x, y, ww);
+    array_quest_exist[ww]=1;
+    ret=ret+"1,";
+    quests_found++;
+    }
+    else
+    {
+    array_quest_exist[ww]=0;
+    ret=ret+"0,";
+    }
+  }
+
+log("Квест есть в: "+ret);
+
+}
+
+
+function click_variant_images(string variant_name)
+{
+string temp;
+string strings_arr[99];
+int click_x;
+int click_y;
+int click_count=0;
+int click_pause=0;
+int x,y; //img
+string params[10]; 
+string img_name;
+int img[999][999];
+string s="";
+int k;
+
+if(fopen(path_variants+variant_name, "r") == 0) {log("Не найдено "+variant_name+".txt"); goto global fin;}
+int steps_amount = freadlineall(#strings_arr[0], 89);
+log("Вариант открытия: "+variant_name+". Шагов: "+format(steps_amount));
+
+  for(win_no=0; win_no<windows_count; win_no++)
+  {
+  if(array_quest_exist[win_no]==0) s=s+format(win_no)+", ";
+  }
+
+log("Пропущены окна: "+s);
+
+
+
+  for(int j=0; j<steps_amount; j++)
+  {
+  
+    for(win_no=0; win_no<windows_count; win_no++)
+    {
+    if(array_quest_exist[win_no]==0) {continue;}
+    
+    
+      if(regexsearch(1, #temp, strings_arr[j], ".bmp")) //клик на картинку
+      {
+      regexsearch(1, #img_name, strings_arr[j], ".*(?=.bmp)");
+      img_name = img_name+".bmp";
+      
+      if(loadimage (#img[0][0], path_img+img_name)<1) {log("====Error load "+strings_arr[j]); goto global fin;}
+      int params_count = regexsearch(-1, #params[0], strings_arr[j], "-?[0-9]\d*(\.\d+)?");  
+      
+      int xn= formatsn(params[0]), yn= formatsn(params[1]), xf= formatsn(params[2]), yf= formatsn(params[3]);
+      int r = formatsn(params[4]);
+      int p = formatsn(params[5]);
+      int indent_x= formatsn(params[6]), indent_y= formatsn(params[7]);
+      
+      
+        if(findimage(1, #img[0][0], 0, #x, #y, xn, yn, xf, yf,r,r,r,r,r,r,p,1, w[win_no])==1)
+        {
+        log("Клик "+img_name); 
+        click(x+xn+indent_x, y+yn+indent_y, win_no);
+        
+        } else log("==="+img_name+ " не найдено");
+      
+      
+      if(quests_found<4) pause(2000);
+      continue;
+      }
+    
+      if(regexsearch(1, #temp, strings_arr[j], "obms")) 
+      {
+      search_mobs_obms_heap(win_no); search_mobs_obms_img(win_no);
+      }
+    
+      if(regexsearch(1, #temp, strings_arr[j], "purchase_resources")) 
+      {
+      quest_purchase_resources(win_no); 
+      }
+    
+    
+      if(regexsearch(1, #temp, strings_arr[j], "write")) 
+      {
+      if(regexsearch(1, #temp, strings_arr[j], "([^\ ]+)$")<1) messagebox("Error "+strings_arr[j]); 
+      log("Пишу ^""+temp+"^"");
+      sendkey(temp, w[win_no]);
+      continue;
+      }
+    
+      if(regexsearch(1, #temp, strings_arr[j], "mouse_move")) 
+      {
+      regexreplace(-1, #temp, strings_arr[j], " ", "");
+      regexreplace(-1, #temp, temp, "mouse_move", "");
+      //messagebox(temp);
+      string rez1[5];
+      k = regexsearch(4, #rez1[0], temp, "-?[0-9]\d*(\.\d+)?");
+      if(k!=4) messagebox("err mouse_move");
+      log("Перетаскивание мыши с "+rez1[0]+", "+rez1[1]+" до "+rez1[2]+", "+rez1[3]);
+      sendmousetransfer(LEFT, formatsn(rez1[0]), formatsn(rez1[1]), formatsn(rez1[2]), formatsn(rez1[3]), 0.02, w[win_no]);
+      
+      continue;
+      }
+    
+      if(regexsearch(1, #temp, strings_arr[j], "click")) 
+      {
+      regexreplace(-1, #temp, strings_arr[j], " ", "");
+      regexreplace(-1, #temp, temp, "click", "");
+      //messagebox(temp);
+      string rez[5];
+      k = regexsearch(2, #rez[0], temp, "-?[0-9]\d*(\.\d+)?");
+      if(k!=2) messagebox("err1");
+      click_x=formatsn(rez[0]);
+      click_y=formatsn(rez[1]);
+      
+      
+      log("Клик из "+strings_arr[j]);
+      click(click_x, click_y, win_no);
+      if(quests_found<4) pause(2000);
+      continue;
+      }
+    
+      if(regexsearch(1, #temp, strings_arr[j], "mouse_count")) 
+      {
+      regexreplace(-1, #temp, strings_arr[j], " ", "");
+      regexreplace(-1, #temp, temp, "mouse_count", "");
+      //messagebox(temp);
+      rez[5];
+      k = regexsearch(4, #rez[0], temp, "-?[0-9]\d*(\.\d+)?");
+      if(k!=4) messagebox("err2");
+      
+      click_count=formatsn(rez[0]);
+      click_pause=formatsn(rez[1]);
+      click_x=formatsn(rez[2]);
+      click_y=formatsn(rez[3]);
+      
+      log("Клик из "+strings_arr[j]+". Количество раз: "+format(click_count));
+      
+        loop(click_count)
+        {
+        sendmouse(LEFT, click_x, click_y, w[win_no]); sleep(click_pause);
+        }
+      
+      if(quests_found<4) pause(2000);
+      continue;
+      }
+    
+    
+      if(regexsearch(1, #temp, strings_arr[j], "pause")) //клик на картинку
+      {
+      regexreplace(-1, #temp, strings_arr[j], " ", "");
+      regexreplace(-1, #temp, temp, "pause", "");
+      //messagebox(temp);
+      rez[5];
+      k = regexsearch(1, #rez[0], temp, "-?[0-9]\d*(\.\d+)?");
+      if(k!=1) messagebox("err2");
+      pause_(formatsn(rez[0]));
+      }
+    
+      if(regexsearch(1, #temp, strings_arr[j], "press_escape")) //клик на картинку
+      {
+      press_escape(win_no);
+      }
+    
+    }
+  }
+
+
+}
+
+function quest_purchase_resources(int win_no)
+{
+//string res_img_name[5]={"resource_food", "resource_ore", "resource_wood", "resource_rock", "resource_gold"};
+string res_img_name[10];
+int count=0;
+
+log("Начало покупки ресурсов");
+
+int res_amount = regexsearch(9, #res_img_name[0], black_market_use_resources_img, "[\wа-яА-ЯёЁ]+|[:punct:]");
+if(res_amount<1) messagebox("Ошибка purchase_resources");
+
+int x,y, r2=30, p=60;
+int r1=10, p1=90;
+
+
+  looptime(60000*30)
+  {
+  st:;
+  
+    for(int k=0; k<res_amount; k++)
+    {
+    if(count==black_market_buy_amount) {log("Покупка завершена"); return 1; }
+    if(size(res_img_name[k])<1) continue;
+    
+    int img[200][200];
+    if(loadimage (#img[0][0], path_img+res_img_name[k]+".bmp")<1) {log("====Error load "+res_img_name[k]); return 0;}
+    
+      if(find_img(res_img_name[k], #img[0][0],  0, 0, xe_win, ye_win, 20, 70, 20, DO_CLICK, 0, 0, win_no)==1)
+      {
+      if(find_img("button_confirm_black_market", #button_confirm_black_market[0][0], 0, 0, xe_win, ye_win, 20, 60, 3000, DO_CLICK, 0, 0, win_no)==0) return 0;
+      pause_(700);
+      click(545, 632, win_no);
+      count++;
+      pause_(1500);
+      goto st;
+      }
+    }
+  
+  log("Не найдена покупка за ресурсы");
+  
+  if(find_img("button_reroll_free", #button_reroll_free[0][0], 0, 0, xe_win, ye_win, 20, 60, 3000, DO_CLICK, 0, 0, win_no)==0 &&
+    find_img("button_reroll_payable", #button_reroll_payable[0][0], 0, 0, xe_win, ye_win, 20, 60, 3000, DO_CLICK, 0, 0, win_no)==0)
+    {
+    log("===Error button_reroll");
+    return 0;
+    }
+  
+  pause_(2000);
+  }
+
+
+log("Конец purchase_resources");
+}
+
+
+function press_escape(int win_no)
+{
+int x, y, r=20, p=60;
+
+log("Клик ESCAPE");
+activate(w[win_no]); pause_(100);
+sendkeydown(27, w[win_no]); pause_(200);
+sendkeyup(27, w[win_no]); pause_(200);
+}
+
+
+function read_main_data()
+{
+string temp_strings[999];
+string temp;
+int am;
+string all_enabled="";
+
+open_items_amount=0;
+
+
+  for(int k=0; k<quests_files_amount; k++)
+  {
+  log("Загрузка "+quest_files_list[k]);
+  
+  
+  if(checkbox_arr_quest_files_flag[k]==0) continue;
+  
+    if(fopen(path_quest_files+quest_files_list[k], "r") == 0) 
+    {
+    log("Не найдено "+path_quest_files+quest_files_list[k]); 
+    goto global fin;
+    }
+  
+  am=freadlineall(#temp_strings[0], 999);
+  fclose();
+    for(int i=0; i<am; i++) //validation
+    {
+      if(regexsearch(1, #temp, temp_strings[i], ".bmp")==0 || regexsearch(1, #temp, temp_strings[i], "+")==0 || regexsearch(1, #temp, temp_strings[i], ".txt")==0) 
+      {
+      if(regexsearch(1, #temp, temp_strings[i], "function")==0) {log("Ошибка "+quest_files_list[k]+" в строке "+format(i)); goto global fin;}
+      }
+    }
+  
+    for(i=0; i<am; i++)
+    {
+    log("Загрузка данных: "+temp_strings[i]);
+    main_data_strings[open_items_amount]=temp_strings[i];
+    open_items_amount++;
+    
+    }
+  
+  all_enabled=all_enabled+quest_files_list[k]+", ";
+  }
+
+WritePrivateProfileString ("checkbox", "enabled_quests", all_enabled, path_cfg); 
+}
+
+
+function read_onbeforemobsearch_items()
+{
+string s[1000];
+string param[99];
+string temp_arr[99];
+string temp;
+int k1, t;
+int string_amount;
+int all=dir(path_obms, #s[0], "file", "txt");
+
+log("Чтение obms items данные: "+format(all));
+
+
+  for(int i=0; i<all; i++)
+  {
+    if(fopen(path_obms+s[i], "r"))
+    {
+    string_amount = freadlineall(#param[0], 90);
+    
+      if(regexsearch(1, #temp, param[0], ".bmp"))
+      {
+      log("obms: "+param[0]);
+      obms_img_name[obms_img_amount] = param[0];  //имя картинки
+      
+      regexreplace(-1, #param[1], param[1], " ", "");
+      k1=regexsearch(-1, #temp_arr[0], param[1], "[^^,]+"); 
+      if(k1!=4) messagebox("Error obms items findimage1");
+        for(t=0; t<k1; t++)
+        {
+        obms_img_coord[obms_img_amount][t] = formatsn(temp_arr[t]);    //коодинаты
+        if(obms_img_coord[obms_img_amount][t]<0) messagebox("Error obms items findimage2");
+        }
+      
+      regexreplace(-1, #param[2], param[2], " ", "");           //разбежность
+      obms_img_r[obms_img_amount] = formatsn(param[2]);
+      if(obms_img_r[obms_img_amount]<0 || obms_img_r[obms_img_amount] > 100) messagebox("Error obms_img_r: "+format(obms_img_r[obms_img_amount]));
+      
+      regexreplace(-1, #param[3], param[3], " ", "");           //%
+      obms_img_p[obms_img_amount] = formatsn(param[3]);
+      if(obms_img_p[obms_img_amount]<0 || obms_img_p[obms_img_amount] > 100) messagebox("Error obms_img_p: "+format(obms_img_p[obms_img_amount]));
+      
+      obms_img_amount++;
+      }
+      else
+      {
+      obms_heap_name[obms_heap_data_count] = s[i];
+      log("obms heap: "+s[i]);
+      
+      string row_collors=param[0];   
+      string row_collors_amount=param[1]; 
+      string row_collors_to_find_min=param[2];
+      string row_r=param[3];
+      string row_dimensions=param[4];
+      string row_coords=param[5];
+      
+      //###############################collors##################################################
+      
+      regexreplace(-1, #row_collors, row_collors, " ", "");
+      k1=regexsearch(-1, #temp_arr[0], row_collors, "[^^,]+"); //all data to array
+        for(t=0; t<k1; t++)
+        {
+        obms_heap_collors[obms_heap_data_count][t] = formatsn(temp_arr[t]);
+        if(obms_heap_collors[obms_heap_data_count][t]<0) messagebox("Error obms_heap_collors");
+        }
+      
+      //##############################row_collors_amount########################################
+      
+      regexreplace(-1, #row_collors_amount, row_collors_amount, " ", "");
+      k1=regexsearch(-1, #temp_arr[0], row_collors_amount, "[^^,]+"); //all data to array
+        for(t=0; t<k1; t++)
+        {
+        obms_heap_collors_amount[obms_heap_data_count][t] = formatsn(temp_arr[t]);
+        if(obms_heap_collors_amount[obms_heap_data_count][t]<0) messagebox("Error obms_heap_collors_amount");
+        }
+      //###############################row_r###################################################
+      
+      regexreplace(-1, #row_r, row_r, " ", "");
+      obms_heap_r[obms_heap_data_count][0] = formatsn(row_r);
+      if(obms_heap_r[obms_heap_data_count][0]<0 || obms_heap_r[obms_heap_data_count][0] > 100) messagebox("Error row_r: "+format(obms_heap_r[obms_heap_data_count][0]));
+      
+      //###############################row_collors_to_find_min#############################
+      
+      regexreplace(-1, #row_collors_to_find_min, row_collors_to_find_min, " ", "");
+      obms_heap_collors_to_find_min[obms_heap_data_count][0] = formatsn(row_collors_to_find_min);
+      if(obms_heap_collors_to_find_min[obms_heap_data_count][0]<0 || obms_heap_collors_to_find_min[obms_heap_data_count][0] > 100) messagebox("Error obms_heap_collors_to_find_min: "+format(obms_heap_collors_to_find_min[obms_heap_data_count][0]));
+      
+      //###############################row_dimensions##########################################
+      
+      regexreplace(-1, #row_dimensions, row_dimensions, " ", "");
+      k1=regexsearch(-1, #temp_arr[0], row_dimensions, "[^^,]+"); //all data to array
+      if(k1!=4) messagebox("Error temp_arr: "+row_dimensions);
+        for(t=0; t<k1; t++)
+        { 
+        obms_heap_dimensions[obms_heap_data_count][t] = formatsn(temp_arr[t]);
+        if(obms_heap_dimensions[obms_heap_data_count][t]<0 || obms_heap_dimensions[obms_heap_data_count][t]>200) messagebox("Error obms_heap_dimensions");
+        }
+      
+      //###############################row_coords#############################################
+      regexreplace(-1, #row_coords, row_coords, " ", "");
+      k1=regexsearch(-1, #temp_arr[0], row_coords, "[^^,]+"); //all data to array
+      if(k1!=4) messagebox("Ошибка последней строчке: "+row_coords+" "+s[obms_heap_data_count]);
+        for(t=0; t<k1; t++)
+        {
+        obms_heap_coords[obms_heap_data_count][t] = formatsn(temp_arr[t]);
+        if(obms_heap_coords[obms_heap_data_count][t]<0 || obms_heap_coords[obms_heap_data_count][t]>2000) messagebox("Error obms_heap_coords");
+        }
+      
+      obms_heap_data_count++;
+      }
+    
+    
+    fclose();
+    }
+  }
+}
+
+function search_mobs_obms_heap(int scan_step)
+{
+int x,y,i;
+
+if(obms_img_amount && debug) log("Поиск search_mobs_obms_heap");
+
+
+  for(i=0; i<obms_heap_data_count; i++)
+  {
+  int temp_colors[10];
+  int temp_colors_amount[10];
+  int temp_collors_min[10];
+  int temp_r;
+  int temp_dimensions[10];
+  int temp_coords[10];
+  int temp_collors_total;
+  int temp_collors_to_find_min;
+  
+    for(int e=0; e<sizearray(temp_colors); e++)
+    {
+    if(obms_heap_collors[i][e]>=0) temp_colors[e]=obms_heap_collors[i][e];
+    else break;
+    }
+  
+  temp_collors_total = e;
+  
+    for(e=0; e<sizearray(temp_colors_amount); e++)
+    {
+    if(obms_heap_collors_amount[i][e]>=0) temp_colors_amount[e]=obms_heap_collors_amount[i][e];
+    else break;
+    }
+  
+  temp_r = obms_heap_r[i][0];
+  temp_collors_to_find_min = obms_heap_collors_to_find_min[i][0];
+  
+    for(e=0; e<sizearray(temp_dimensions); e++)
+    {
+    if(obms_heap_dimensions[i][e]>=0) temp_dimensions[e]=obms_heap_dimensions[i][e];
+    else break;
+    }
+  
+    for(e=0; e<sizearray(temp_coords); e++)
+    {
+    if(obms_heap_coords[i][e]>=0) temp_coords[e]=obms_heap_coords[i][e];
+    else break;
+    }
+  
+  
+    looptime(100)
+    {
+    int heap_found=findheapcolor(1, #temp_colors[0], #temp_colors_amount[0], temp_collors_total, temp_collors_to_find_min, #x, #y, temp_dimensions[0], temp_dimensions[1], temp_dimensions[2], temp_dimensions[3] , temp_coords[0], temp_coords[1], temp_coords[2], temp_coords[3], temp_r,temp_r,temp_r,temp_r,temp_r,temp_r, w[win_no]);
+    
+      if(heap_found)
+      {
+      string re="===search_mobs_obms_heap: "+obms_heap_name[win_no]+" - "+format(x_current)+", "+format(y_current);
+      log(re);
+      click(x, y, win_no);
+      pause_(3000);
+      } 
+    }
+  
+  }
+}
+
+function search_mobs_obms_img(int scan_step)
+{
+int scan_img[999][999];
+int x1, y1;
+
+if(obms_img_amount) log("Поиск search_quests_obms_img");
+
+
+  for(int c=0; c<obms_img_amount; c++)
+  {
+  int res =loadimage (#scan_img[0][0], path_obms+obms_img_name[c]); 
+  if(res<1) {log("Error load img "+obms_img_name[c]+": "+formatic(13)+imgerr(res)); continue;}
+  int i = win_no;
+  
+    if(findimage(1, #scan_img[0][0], 0, #x1, #y1, obms_img_coord[c][0], obms_img_coord[c][1], obms_img_coord[c][2], obms_img_coord[c][3], obms_img_r[c],obms_img_r[c],obms_img_r[c],obms_img_r[c],obms_img_r[c],obms_img_r[c], obms_img_p[c], 1, w[i])==1) 
+    {
+    string re="===search_quests_obms_img: "+obms_img_name[c];
+    log(re);
+    click(x1, y1, i);
+    pause_(3000);
+    }
+  } 
+}
+
+function find_pix(string name, int xp, int yp, int col, int r, int waittime, int make_click, int wind_num)
+{
+if(name!="") log("Ищу пиксель "+name);
+
+if(waittime<1) waittime=20;
+
+  looptime(waittime)
+  {
+    if(scanpixel(xp, yp, col, r, r, r, r, r, r, w[wind_num]))
+    {
+    if(name!="") log("Пиксель найден в окне "+format(wind_num));
+    if(make_click) click(xp, yp, w[wind_num]);
+    return 1;
+    
+    }
+  sleep(10);
+  }
+
+return 0;
+
+}
+
+function find_img(string name, int #img, int x1, int y1, int x2, int y2, int r, int p, int waitimg, int make_click, int ind_x, int ind_y, int win_no)
+{
+//      find_img(res_img_name[k], #img[][], 0, 0,        xe_win, ye_win, 20,     60,      0,           DO_CLICK,          0, 0,            win_no)
+int x,y;
+
+if(name!="") log("Ищу "+name+". r="+format(r)+", p="+format(p)+" в окне "+format(win_no));
+
+//int img[299][299];
+//if(loadimage (#img[0][0], path_img+name+".bmp")<1) {log("====Error load "+name); return 0;}
+
+if(waitimg<10 && make_click == 0) return findimage(1, #img[0][0], 0, #x, #y, x1, y1, x2, y2, r,r,r,r,r,r,p,1, w[win_no]);
+if(waitimg<10) waitimg=100;
+
+  looptime(waitimg)
+  {
+    if(findimage(1, #img[0][0], 0, #x, #y, x1, y1, x2, y2, r,r,r,r,r,r,p,1, w[win_no]))
+    {
+    if(name!="") log("Картинка "+name+" найдена");
+    if(make_click==0) return 1;
+    
+    sleep(200); click(x+x1+ind_x, y+y1+ind_y, win_no); sleep(200);
+    
+    return 1;
+    }
+  sleep(10);
+  }
+
+if(name!="") log("Картинка "+name+" не найдена");
+return 0;
+}
+
+function click_img(string attack_image, int just_check, int win_no)
+{
+int x, y, r=20, p=60; 
+int coord[4]={0,0,xe_win,ye_win};
+regexreplace(1, #attack_image, attack_image, ".bmp", "");
+
+int img[999][999];
+if(loadimage (#img[0][0], path_img+attack_image+".bmp")<1) {log("====Error load "+attack_image); return 0;}
+
+log("Ищу "+attack_image);
+
+if(just_check) return findimage(1, #img[0][0], 0, #x, #y, coord[0], coord[1], coord[2], coord[3], r,r,r,r,r,r,p,1, w[win_no]);
+
+
+  looptime(50)
+  {
+    if(findimage(1, #img[0][0], 0, #x, #y, coord[0], coord[1], coord[2], coord[3], r,r,r,r,r,r,p,1, w[win_no])==1)
+    {
+    log("Клик по "+attack_image);
+    click(x, y, win_no);
+    log("Нажал " + attack_image);
+    return 1;
+    }
+  pause_(10);
+  }
+
+log("===Не нашел кнопку " + attack_image);
+return 0;
+}
+
+
+function turn_sync(string new_state, int win_no)
+{
+int x1,y1,r=10, p=90;
+
+  if(new_state=="off")
+  {
+    if(findimage(1, #turn_sync_on_pause[0][0], 0, #x1, #y1, 0, 0, xe_win, ye_win, r,r,r,r,r,r, p, 1, w[win_no])==1) 
+    {
+    click(x1, y1, win_no); pause_(1000);
+    log("Синхронизация выключена в окне №"+format(win_no));
+    }
+  if(debug) log("Нечего выключать в "+format(win_no));
+  return;
+  }
+
+  if(new_state=="on")
+  {
+    if(findimage(1, #turn_sync_from_pause[0][0], 0, #x1, #y1, 0, 0, xe_win, ye_win, r,r,r,r,r,r, p, 1, w[win_no])==1) 
+    {
+    click(x1, y1, win_no); pause_(1000);
+    log("Синхронизация включена в окне №"+format(win_no));
+    }  
+    else
+    {
+    sendkey(F9, w[0]);
+    log("Синхронизация включена в окне №0");
+    }
+  return;
+  }
+
+log("======qwertty");
+}
+
+function delete_scanner_scr()
+{
+string s[1000];
+int a=dir(path_scanner_scr, #s[0], "file");
+
+log("Сканнер удаление файлов: "+format(a));
+
+for(int k=0; k<a; k++) DeleteFile(path_scanner_scr+s[k]);
+
+}
+
+
+
+function getmessage(0, WM_CLOSE)
+{
+log("=====CLOSE=====");
+goto global fin;
+}
+
+function getmessage(0, WM_COMMAND)
+{
+
+  for(int k=0; k<quests_files_amount; k++)
+  {
+    if(message.lparam==checkbox_arr_quest_files[k]) 
+    {
+    if(checkbox_arr_quest_files_flag[k]==1) checkbox_arr_quest_files_flag[k]=0; else checkbox_arr_quest_files_flag[k]=1;
+    log("checkbox_arr_quest_files_flag "+format(k)+" = "+format(checkbox_arr_quest_files_flag[k]));
+    }
+  }
+
+
+/*
+  if(message.lparam==flag_arr[0]) //debug
+  {
+  if(debug) debug=0;
+  else debug=1;
+  log("Debug => "+format(debug));
+  WritePrivateProfileString ("checkbox", "debug", format(debug), path_cfg);  
+  }
+
+  if(message.lparam==flag_arr[1]) //borders
+  {
+  if(show_border) show_border=0;
+  else show_border=1;
+  log("Show_border => "+format(show_border));
+  WritePrivateProfileString ("checkbox", "show_border", format(show_border), path_cfg);  
+  }
+
+  if(message.lparam==flag_arr[2]) //scanner
+  {
+  if(scanner_enabled) scanner_enabled=0;
+  else scanner_enabled=1;
+  log("Scanner_enabled => "+format(scanner_enabled));
+  WritePrivateProfileString ("checkbox", "scanner_enabled", format(scanner_enabled), path_cfg);  
+  }
+
+  if(message.lparam==flag_arr[3]) //Mines
+  {
+  if(search_mines_flag) search_mines_flag=0;
+  else search_mines_flag=1;
+  log("Search_mines_flag => "+format(search_mines_flag));
+  WritePrivateProfileString ("checkbox", "search_mines_flag", format(search_mines_flag), path_cfg);  
+  }
+*/
+}
+
+function 4_read_settings()
+{
+string put=path_cfg; 
+char c[256]; 
+int k;
+if(fopen(put, "rb")>0) fclose();
+else {log("Config not found. Standard settings will be used"); return;}
+
+//save_var    (#debug, #c[0],                       "checkbox",            "debug",                       cfg ("checkbox", "debug", 0, address (#c[0]), sizearray(c), put));
+
+//save_ko_array(#zone_lupa[0], #c[0],               "zones",               "zone_lupa",                   cfg ("zones", "zone_lupa", 0, address (#c[0]), sizearray(c), put));
+
+save_word   (#WindowName,      #c[0],             "main",                "WindowName",                  cfg ("main", "WindowName", 0, address (#c[0]), sizearray(c), put));
+
+save_var (#black_market_buy_amount, #c[0], "main",  "black_market_buy_amount", cfg ("main", "black_market_buy_amount", 0, address (#c[0]), sizearray(c), put));
+
+save_word   (#black_market_use_resources_img,      #c[0],             "main",                "black_market_use_resources_img",                  cfg ("main", "black_market_use_resources_img", 0, address (#c[0]), sizearray(c), put));
+save_var (#three_dots_esc_amount, #c[0], "main",  "three_dots_esc_amount", cfg ("main", "three_dots_esc_amount", 0, address (#c[0]), sizearray(c), put));
+
+
+save_ko_array(#read_rally_time_coord[0], #c[0],               "zones",               "read_rally_time_coord",                   cfg ("zones", "read_rally_time_coord", 0, address (#c[0]), sizearray(c), put));
+save_butt_xy(#rally_rand_time[0], #c[0], "main", "rally_rand_time", cfg ("main", "rally_rand_time", 0, address (#c[0]), sizearray(c), put));
+
+save_var (#stamina_minimum, #c[0], "main",  "stamina_minimum", cfg ("main", "stamina_minimum", 0, address (#c[0]), sizearray(c), put));
+save_var (#stamina_preset, #c[0], "main",  "stamina_preset", cfg ("main", "stamina_preset", 0, address (#c[0]), sizearray(c), put));
+save_var (#speedup_limit_sec, #c[0], "main",  "speedup_limit_sec", cfg ("main", "speedup_limit_sec", 0, address (#c[0]), sizearray(c), put));
+
+save_var (#speedup_to_sec_min, #c[0], "main",  "speedup_to_sec_min", cfg ("main", "speedup_to_sec_min", 0, address (#c[0]), sizearray(c), put));
+save_var (#speedup_on_off, #c[0], "main",  "speedup_on_off", cfg ("main", "speedup_on_off", 0, address (#c[0]), sizearray(c), put));
+save_var (#rally_check_stamina_on_off, #c[0], "main",  "rally_check_stamina_on_off", cfg ("main", "rally_check_stamina_on_off", 0, address (#c[0]), sizearray(c), put));
+
+save_butt_xy(#vikings_center_coord[0], #c[0],  "main", "vikings_center_coord",    cfg ("main", "vikings_center_coord", 0, address (#c[0]), sizearray(c), put));
+save_butt_xy(#vikings_attack1_coord[0], #c[0], "main", "vikings_attack1_coord",  cfg ("main", "vikings_attack1_coord", 0, address (#c[0]), sizearray(c), put));
+save_butt_xy(#vikings_attack2_coord[0], #c[0], "main", "vikings_attack2_coord",  cfg ("main", "vikings_attack2_coord", 0, address (#c[0]), sizearray(c), put));
+save_butt_xy(#vikings_preset_coord[0], #c[0],  "main", "vikings_preset_coord",    cfg ("main", "vikings_preset_coord", 0, address (#c[0]), sizearray(c), put));
+save_butt_xy(#vikings_march_coord[0], #c[0],   "main", "vikings_march_coord",      cfg ("main", "vikings_march_coord", 0, address (#c[0]), sizearray(c), put));
+
+save_word   (#vikings_schedule,      #c[0],             "main",                "vikings_schedule",                  cfg ("main", "vikings_schedule", 0, address (#c[0]), sizearray(c), put));
+
+
+
+}
+
+
+function save_var(int #var,  char #ch, string category, string err, int ret)
+{
+  if(ret<1) 
+  {
+  settings_loading_err++;
+  log("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret)); 
+  messagebox("Новый параметр найден: "+err+". Стандартные параметры записаны в конфиг: "+format(var));
+  WritePrivateProfileString (category, err, format(var), path_cfg); 
+  return 0;
+  }
+
+string rez[1];
+
+//int k = regexsearch(1, #rez[0], format(#ch[0]), "\d+");
+int k = regexsearch(1, #rez[0], format(#ch[0]), "(?<!\d)-?\d*[.,]?\d+");
+if(k!=1) messagebox("err");
+
+var=formatsn(rez[0]);
+//if(debug) log(format(ret)+". Load variable: "+rez[0]);
+}
+
+function save_point_col(int #arr, char #ch, string category, string err, int ret)
+{
+  if(ret<1) 
+  {
+  settings_loading_err++;
+  log("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret)); 
+  messagebox("Новый параметр найден: "+err+". Стандартные параметры записаны в конфиг: "+format(var));
+  WritePrivateProfileString (category, err, format(arr[0])+","+format(arr[1])+","+format(arr[2]), path_cfg); 
+  return 0;
+  }
+
+initialarray(#arr[0], -1);
+string rez[5];
+int k = regexsearch(3, #rez[0], format(#ch[0]), "-?[0-9]\d*(\.\d+)?");
+if(k!=3) messagebox("err");
+arr[0]=formatsn(rez[0]);
+arr[1]=formatsn(rez[1]);
+arr[2]=formatsn(rez[2]);
+//if(debug) log(format(ret)+". Load point. XY: "+rez[0]+","+rez[1]+". Color: "+rez[2]);
+}
+
+function save_word(string #str, char #ch, string category, string err, int ret)
+{
+  if(ret<1) 
+  {
+  settings_loading_err++;
+  log("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret)); 
+  messagebox("Новый параметр найден: "+err+". Стандартные параметры записаны в конфиг: "+str);
+  WritePrivateProfileString (category, err, str, path_cfg); 
+  return 0;
+  }
+
+str=format(#ch[0]);
+string s=str;
+//if(debug) log(format(ret)+". Load word: "+s);
+}
+
+function save_butt_xy(int #arr, char #ch, string category, string err, int ret)
+{
+  if(ret<1) 
+  {
+  settings_loading_err++;
+  log("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret)); 
+  messagebox("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret));
+  WritePrivateProfileString (category, err, format(arr[0])+","+format(arr[1]), path_cfg); 
+  return 0;
+  }
+
+initialarray(#arr[0], -1);
+string rez[5];
+int k = regexsearch(2, #rez[0], format(#ch[0]), "-?[0-9]\d*(\.\d+)?");
+if(k!=2) messagebox("err");
+arr[0]=formatsn(rez[0]);
+arr[1]=formatsn(rez[1]);
+//if(debug) log(format(ret)+". Load button coords: "+rez[0]+","+rez[1]);
+}
+
+function save_ko_array(int #arr, char #ch, string category, string err, int ret)
+{
+string rez[5];
+
+  if(ret<1) 
+  {
+  settings_loading_err++;
+  log("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret)); 
+  messagebox("Error load "+err+". Standard parameters will be loaded. Code: "+format(ret));
+  WritePrivateProfileString (category, err, format(arr[0])+","+format(arr[1])+","+format(arr[2])+","+format(arr[3]), path_cfg); 
+  return 0;
+  }
+
+initialarray(#arr[0], -1);
+
+int k = regexsearch(4, #rez[0], format(#ch[0]), "-?[0-9]\d*(\.\d+)?");
+if(k!=4) messagebox("err");
+arr[0]=formatsn(rez[0]);
+arr[1]=formatsn(rez[1]);
+arr[2]=formatsn(rez[2]);
+arr[3]=formatsn(rez[3]);
+//if(debug) log(format(ret)+". Load zone. Coords: "+rez[0]+","+rez[1]+","+rez[2]+","+rez[3]);
+}
+
+
+
+
+function border(int x1,int  y1,int  x2,int  y2, int p, int r, int color)
+{
+if(show_border==0) return;
+if(y2<y1 || x2<x1) {log("Border error"); return;}
+
+int visual_X[1500][4]; // длина и толщина горизонтальной линии
+int visual_Y[4][1500]; // длина и толщина вертикальной линии
+int ra=4;
+int size_x=x2-x1+ra, size_y=y2-y1+ra;
+x1=x1-ra;
+y1=y1-ra;
+
+
+int i, j;
+  for(i=0; i<size_x; i++)
+  {
+  for(j=0; j<ra; j++)visual_X[i][j]=color;
+  }
+  for(i=0; i<size_y; i++)
+  {
+  for(j=0; j<ra; j++)visual_Y[j][i]=color;
+  }
+
+enablevisualwindow(0); visualwindow(0, 0, 0, size_x, ra, x1, y1, 100, #visual_X[0][0]);           
+enablevisualwindow(1); visualwindow(1, 0, 0, size_x, ra, x1, y1+size_y, 100, #visual_X[0][0]);    
+enablevisualwindow(2); visualwindow(2, 0, 0, ra, size_y, x1, y1, 100, #visual_Y[0][0]);           
+enablevisualwindow(3); visualwindow(3, 0, 0, ra, size_y, x1+size_x-ra, y1, 100, #visual_Y[0][0]); 
+pause_(p);
+  if(r)
+  {
+  disablevisualwindow(0);
+  disablevisualwindow(1);
+  disablevisualwindow(2);
+  disablevisualwindow(3);
+  resettextout(1);
+  }
+
+}
+
+function click_castle_button(int win_no)
+{
+int x,y, r=10, p=60;
+
+  if(findimage(1, #back_to_castle_button[0][0], 0, #x, #y, 0, 0, xe_win, ye_win, r,r,r,r,r,r, p, 1, w[win_no])==1)
+  {
+  log("Клик возврат к замку");
+  click(x, y, win_no);
+  return 1;
+  }
+
+return 0;
+}
+
+
+
+function pause_(int p)
+{
+if(p>=300) log("Pause: "+format(p));
+pause(p);
+}
+
+function is_activity_window(int win_no)
+{
+int r=5;
+int k=scanpixel(250, 71, 8701662, r, r, r, r, r, r, w[win_no]);
+log("is_activity_window = "+format(k)); return k;
+
+
+}
+
+
+function check_is_custle()
+{
+int x,y, r=20, p=70;
+int co[4]={358, 934, 568, 998};
+
+log("Проверка замок");
+
+  if(findimage(1, #attack_castle_time[0][0], 0, #x, #y, co[0], co[1], co[2], co[3], r,r,r,r,r,r, p, 1, w[win_no])==1)
+  {
+  log("===Ошибочная атака на замок");
+  log("Нажал назад");
+  click(41, 80, win_no); pause_(3000);
+  if(next_step("mobs")==0) return 0;
+  return 1;
+  }
+
+return 0;
+}
+
+
+function CheckVersion()
+{
+string temp, all_current, all_new, all_new_to_write, current_version, changes;
+
+  if(fopen(path+"version.txt", "r")==0)
+  {
+    if(fopen(path+"version.txt", "w"))
+    {
+    fwrite(format(int_version-1)); fwrite(ENDL); 
+    
+      for(int f=0; f<int_version; f++)
+      {
+      if(whatsnew[f]=="") break;
+      changes=changes+"v1."+format(f)+" - "+whatsnew[f]+"^n";
+      fwrite("v1."+format(f)+" - "+whatsnew[f]); fwrite(ENDL);
+      }
+    fclose();
+    MessageBox(0, "New version "+version+":^n^n"+changes, "New version ", 0);
+    return;
+    }
+  } else fclose();
+
+  if(fopen(path+"version.txt", "r")!=0)
+  {
+  freadline(current_version);
+  fclose();
+  }
+
+if(formatsn(current_version)==int_version) return;
+
+  if(fopen(path+"version.txt", "r")!=0)
+  {
+  while(freadline(temp)>0) all_current=all_current+temp+"^n";
+  fclose();
+  }
+
+
+all_new=current_version+"^n";
+all_new_to_write=format(int_version)+"^n";
+  for(int h=0; h<sizearray(whatsnew); h++)
+  {
+    if(whatsnew[h]!="") 
+    {
+    all_new         =all_new+"v1."+format(h)+" - "+whatsnew[h]+"^n";
+    all_new_to_write=all_new_to_write+"v1."+format(h)+" - "+whatsnew[h]+"^n";
+    }
+    else break;
+  }
+
+string result;
+
+regexreplace(1, #result, all_new, all_current, "");
+
+  if(fopen(path+"version.txt", "w")!=0)
+  {
+  fwrite(all_new_to_write); fclose();
+  }
+
+MessageBox(0, "New version "+version+":^n^n"+result, "New version!", 0);
+}
+
+
+function log(string str)
+{
+int Year, Month, DayOfWeek, Day, Hour, Minute, Second, Milliseconds;
+string mo,d,h,m,s;
+getlocaltime(Year, Month, DayOfWeek, Day, Hour, Minute, Second, Milliseconds);
+
+if(Day>-1 && Day<10)       d="0"+format(Day);   else d=format(Day);
+if(Month>-1 && Month<10)  mo="0"+format(Month); else mo=format(Month);
+if(Hour>-1 && Hour<10)     h="0"+format(Hour);  else h=format(Hour);
+if(Minute>-1 && Minute<10) m="0"+format(Minute);else m=format(Minute);
+if(Second>-1 && Second<10) s="0"+format(Second);else s=format(Second);
+
+string wr=d+"."+mo+"."+format(Year)+" - "+h+":"+m+":"+s+". W"+format(win_no)+" - "+str;
+
+  if (fopen (path+"log.txt", "a")!=0)
+  {
+  fwrite(wr);
+  fwrite(ENDL);
+  fclose();
+  }
+
+  if (fopen (path+"log2.txt", "a")!=0)
+  {
+  fwrite(wr);
+  fwrite(ENDL);
+  fclose();
+  }
+
+strcpy(#log_array[0], h+":"+m+":"+s+". W"+format(win_no)+" - "+str);
+sendmessage(384, 0, address(#log_array[0]), formatiw(list));
+sendmessage(407, sendmessage(395, 0, 0, formatiw(list))-1, 0, formatiw(list)); 
+}
+
+
+function scr(string name, int x1, int y1, int x2, int y2, int win_no)
+{
+log("scr_"+name);
+savescreen(path+name+".BMP", x1, y1, x2, y2, w[win_no]);
+
+
+}
+
+
+function 3_find_windows()
+{
+// поиск нужных окон по части имени
+  for(int i=0; i<windows_count; i++) // цикл для всех окон
+  {
+  
+    if(regexsearch(1, #TextWindow, w_temp.name[i], WindowName))
+    {
+      if(IsIconic(formatwi(w_temp[i]))==0)
+      {
+        if(n<12)
+        {
+        // записать данные окна в массив
+        w[n] = w_temp[i];
+        w.left[n] = w_temp.left[i];
+        w.top [n] = w_temp.top[i];
+        w.width[n] = w_temp.width[i];
+        w.height[n] = w_temp.height[i];
+        w.leftclient[n] = w_temp.leftclient[i];
+        w.topclient[n] = w_temp.topclient[i];
+        w.widthclient[n] = w_temp.widthclient[i];
+        w.heightclient[n] = w_temp.heightclient[i];
+        w.name[n] = w_temp.name[i];
+        w.class[n] = w_temp.class[i];
+        
+        TextWindowAll = TextWindowAll + w_temp.name[i] + "^r^n";
+        n++;
+        }
+      }
+    }
+  }
+
+windows_count=n;
+
+
+if(windows_count==-1 || windows_count>12) messagebox("Найдено больше 12 окон");
+  else
+  {
+    if(windows_count>0)
+    {
+    //messagebox("Имена окон:^r^n^r^n"+TextWindowAll);
+    getdisplay(MonitorColor, MonitorX, MonitorY); // узнать разрешение экрана
+    }
+    else
+    {
+    messagebox("Окна не найдены");
+    //goto global end;
+    }
+  }
+
+log("Реальное количество окон: "+format(windows_count));
+}
+
+
+
+
+
+function get_quest_files_list()
+{
+log("Получение списка квестов");
+log(path_quest_files);
+
+quests_files_amount = dir(path_quest_files, #quest_files_list[0], "file", "txt");
+
+int y_checkbox=10;
+
+string all_enabled;
+char c[9999];
+string temp;
+
+
+save_word (#all_enabled, #c[0],  "checkbox",  "enabled_quests",  cfg ("checkbox", "enabled_quests", 0, address (#c[0]), sizearray(c), path_cfg));
+
+
+  for(int k=0; k<quests_files_amount; k++)
+  {
+  log("Файл квестов №"+format(k+1)+": "+quest_files_list[k]);
+  checkbox_arr_quest_files[k]=CreateWindow(0, "BUTTON", quest_files_list[k], 3+1342177280, 593, y_checkbox, 145, 20, formatwi(w1), 0, 0, 0);
+  
+  y_checkbox=y_checkbox+20;
+  
+    if(regexsearch(1, #temp, all_enabled, quest_files_list[k]))
+    {
+    checkbox_arr_quest_files_flag[k]=1;
+    sendmessage(241, 1, 0, formatiw(checkbox_arr_quest_files[k]));
+    }
+  }
+}
+
+function click(int x, int y, int i)
+{
+if(debug) log("Клик "+format(x)+" "+format(y));
+
+  if(i<0 || i>10000) 
+  {
+  log("===Error click1: "+format(i));
+  i=win_no;
+  }
+
+  if(x<0 || y<0) 
+  {
+  log("===Error click2: "+format(x)+" "+format(y));
+  return;
+  }
+
+
+sendmousemove(x, y, w[i]);       pause_(150);
+sendmousedown(LEFT, x, y, w[i]); pause_(100);
+sendmouseup(LEFT, x, y, w[i]);   pause_(100);
+}
+
+
+function 2_load_images()
+{
+int k=0;
+
+/*
+k=loadimage (#lupa[0][0],                  path_img+"lupa.bmp"); if(k<1)    log("Error load img lupa: "+formatic(13)+imgerr(k));
+k=loadimage (#turn_sync_off[0][0],         path_img+"turn_sync_off.bmp"); if(k<1) log("Error load turn_sync_off scout: "+formatic(13)+imgerr(k));
+k=loadimage (#back_to_castle_button[0][0], path_img+"back_to_castle_button.bmp"); if(k<1) log("Error load img back_to_castle_button: "+formatic(13)+imgerr(k));
+k=loadimage (#cancel[0][0],                path_img+"cancel.bmp"); if(k<1) log("Error load img cancel: "+formatic(13)+imgerr(k));
+
+k=loadimage (#turn_sync_on_pause[0][0],    path_img+"turn_sync_on_pause.bmp"); if(k<1) log("Error load img turn_sync_on_pause: "+formatic(13)+imgerr(k));
+k=loadimage (#turn_sync_from_pause[0][0],  path_img+"turn_sync_from_pause.bmp"); if(k<1) log("Error load img turn_sync_from_pause: "+formatic(13)+imgerr(k));
+k=loadimage (#attack_castle_time[0][0],    path_img+"attack_castle_time.bmp"); if(k<1) log("Error load img attack_castle_time: "+formatic(13)+imgerr(k));
+*/
+k=loadimage (#quest_done_chest_40[0][0],    path_img+"quest_done_chest_40.bmp"); if(k<1) log("Error load img quest_done_chest_40: "+formatic(13)+imgerr(k));
+k=loadimage (#three_dots[0][0],             path_img+"three_dots.bmp"); if(k<1) log("Error load img three_dots: "+formatic(13)+imgerr(k));
+k=loadimage (#button_activity[0][0],        path_img+"button_activity.bmp"); if(k<1) log("Error load img button_activity: "+formatic(13)+imgerr(k));
+k=loadimage (#window_activity[0][0],        path_img+"window_activity.bmp"); if(k<1) log("Error load img window_activity: "+formatic(13)+imgerr(k));
+k=loadimage (#button_confirm_black_market[0][0],        path_img+"button_confirm_black_market.bmp"); if(k<1) log("Error load img button_confirm_black_market: "+formatic(13)+imgerr(k));
+k=loadimage (#button_reroll_free[0][0],        path_img+"button_reroll_free.bmp"); if(k<1) log("Error load img button_reroll_free: "+formatic(13)+imgerr(k));
+k=loadimage (#button_reroll_payable[0][0],        path_img+"button_reroll_payable.bmp"); if(k<1) log("Error load img button_reroll_payable: "+formatic(13)+imgerr(k));
+k=loadimage (#march_clock[0][0],        path_img+"march_clock.bmp"); if(k<1) log("Error load img march_clock: "+formatic(13)+imgerr(k));
+k=loadimage (#rally_check_limit_time_swords[0][0],        path_img+"rally_check_limit_time_swords.bmp"); if(k<1) log("Error load img rally_check_limit_time_swords: "+formatic(13)+imgerr(k));
+k=loadimage (#rally_join_green[0][0],        path_img+"rally_join_green.bmp"); if(k<1) log("Error load img rally_join_green: "+formatic(13)+imgerr(k));
+
+k=loadimage (#speedup_arrow_right[0][0],    path_img+"speedup_arrow_right.bmp"); if(k<1) log("Error load img speedup_arrow_right: "+formatic(13)+imgerr(k));
+k=loadimage (#stamina_cristal[0][0],        path_img+"stamina_cristal.bmp"); if(k<1) log("Error load img stamina_cristal: "+formatic(13)+imgerr(k));
+k=loadimage (#vikings_20lvl[0][0],        path_img+"vikings_20lvl.bmp"); if(k<1) log("Error load img vikings_20lvl: "+formatic(13)+imgerr(k));
+
+
+
+
+log("Загрузка картинок окончена");
+}
+
+/*
+function press_escape(int win_no, int make_click)
+{
+int x, y, r=20, p=60;
+
+log("Клик ESCAPE");
+activate(w[win_no]);
+sendkeydown(27, w[win_no]); pause_(200);
+sendkeyup(27, w[win_no]); pause_(200);
+if(make_click==0) return 1;
+
+  looptime(2000)
+  {
+    if(findimage(1, #cancel[0][0], 0, #x, #y, 0, 0, xe_win, ye_win,r,r,r,r,r,r, p,1, w[win_no])==1) 
+    {
+    log("Click cancel");
+    click(x, y, win_no); pause_(500);
+    return 1;
+    }
+  }
+
+  looptime(2000)
+  {
+    if(findimage(1, #lupa[0][0], 0, #x, #y, 0, 0, xe_win, ye_win,r,r,r,r,r,r, p,1, w[win_no])==1) 
+    {
+    log("Найдено лупа");
+    return 1;
+    }
+  }
+
+pause_(100);
+log("Не нашел cancel");
+return 0;
+}
+
+*/
+
+
+
+
+function imgerr(int e)
+{
+if(e==-1) return "File not found";
+if(e==-2) return "Error X";
+if(e==-3) return "Error Y";
+}
+
+function toNormalTime(int dMillisec) 
+{
+char c[1024];
+double dSec = dMillisec / 1000;
+int iHour=dSec/3600,
+iMin=dSec/60-iHour*60,
+iSec=dSec-iHour*3600-iMin*60;
+wsprintf(address(#c[0]), "%02d:%02d:%02d", iHour, iMin, iSec);
+return format(#c[0]);
+}
+
+
+
+CREATE_TIMER(0, 4000)//Номер таймера, выполнение таймера через мсек.
+{
+
+}
+
+CREATE_TIMER(1, 1000)//Номер таймера, выполнение таймера через мсек.
+{
+SetWindowText(time_count, "Time: "+toNormalTime(gettime()-gt_start));
+if(flag_button0[1]>0) {flag_button0[1]=0; start(path_cfg);}
+
+}
+
+
+
+
+
+
+
+
+end:;
+fin:;
+//if(individualcode()=="fmrnqikmrl" || individualcode()=="dhqppjfitn") sleep(1); else close();
